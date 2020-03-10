@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "target": "ESNext",
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "allowJs": true,
+    "noEmit": true,
+    "isolatedModules": false,
+    "paths": {
+      "@/*": ["src/*"],
+      "@@/*": ["./*"]
+    }
+  },
+  "include": ["src/**/*", "assets/**/*", "webpack.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}

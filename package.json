@@ -1,0 +1,63 @@
+{
+  "private": true,
+  "name": "phaser3-electron-tutorial",
+  "version": "1.0.0",
+  "description": "The tutorial of Phaser 3 on Electron with TypeScript",
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack && electron .",
+    "build": "cross-env NODE_ENV=production webpack",
+    "start": "electron .",
+    "pack:win": "npm run build && electron-builder --win --x64"
+  },
+  "keywords": [
+    "Phaser",
+    "Electron",
+    "TypeScript",
+    "Webpack"
+  ],
+  "author": "tetsugi",
+  "license": "MIT",
+  "build": {
+    "appId": "com.tetsugi.phaser-tutorial",
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "extraMetadata": {
+      "main": "./dist/main.js"
+    },
+    "files": [
+      "dist/**/*"
+    ],
+    "directories": {
+      "output": "release"
+    }
+  },
+  "devDependencies": {
+    "@types/webpack": "^4.41.7",
+    "@types/webpack-merge": "^4.1.5",
+    "@typescript-eslint/eslint-plugin": "^2.22.0",
+    "@typescript-eslint/parser": "^2.22.0",
+    "cross-env": "^7.0.2",
+    "electron": "^8.1.0",
+    "electron-builder": "^22.4.0",
+    "eslint": "^6.8.0",
+    "file-loader": "^5.1.0",
+    "fork-ts-checker-webpack-plugin": "^4.0.5",
+    "html-webpack-plugin": "^3.2.0",
+    "ts-loader": "^6.2.1",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3",
+    "url-loader": "^3.0.0",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "phaser": "^3.22.0"
+  }
+}
