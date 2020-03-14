@@ -11,7 +11,8 @@
     "isolatedModules": false,
     "paths": {
       "@/*": ["src/*"],
-      "@@/*": ["./*"]
+      "@@/*": ["./*"],
+      "@assets/*": ["src/renderer/assets/*"]
     }
   },
   "include": ["src/**/*", "assets/**/*", "webpack.config.ts"],

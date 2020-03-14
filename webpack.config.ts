@@ -56,6 +56,9 @@ const renderer: Configuration = merge(common, {
   },
   resolve: {
     extensions: [".json", ".css"],
+    alias: {
+      "@assets": path.join(__dirname, "src", "renderer", "assets"),
+    },
   },
   module: {
     rules: [

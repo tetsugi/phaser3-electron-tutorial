@@ -1,5 +1,5 @@
 import Phaser from "phaser"
-import sky from "@@/assets/sky.png"
+import sky from "@assets/sky.png"
 
 export default class TitleScene extends Phaser.Scene {
 

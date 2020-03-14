@@ -1,9 +1,9 @@
 import Phaser from "phaser"
-import sky from "@@/assets/sky.png"
-import ground from "@@/assets/platform.png"
-import star from "@@/assets/star.png"
-import bomb from "@@/assets/bomb.png"
-import dude from "@@/assets/dude.png"
+import sky from "@assets/sky.png"
+import ground from "@assets/platform.png"
+import star from "@assets/star.png"
+import bomb from "@assets/bomb.png"
+import dude from "@assets/dude.png"
 
 const images = [
   ["sky", sky],
