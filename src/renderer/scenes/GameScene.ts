@@ -18,14 +18,14 @@ export default class GameScene extends Phaser.Scene {
 
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys
 
-  private score = 0
+  private score: number
   private scoreText: Phaser.GameObjects.Text
-  private gameOver = false
+  private gameOver: boolean
 
   private player: Sprite
 
   constructor() {
-    super({ key: "SampleScene" })
+    super({ key: "GameScene", active: false })
   }
 
   preload() {
@@ -35,6 +35,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
+    this.score = 0
+    this.gameOver = false
+
     this.add.image(400, 300, "sky")
 
     const platforms = this.physics.add.staticGroup()
@@ -95,7 +98,22 @@ export default class GameScene extends Phaser.Scene {
       player.anims.play("turn")
 
       this.gameOver = true
+
+      this.time.delayedCall(1000, () => this.scene.start("GameOverScene", { score: this.score }))
     })
+
+    const fallBomb = (position: number) => {
+      const x = position < 400
+        ? Phaser.Math.Between(400, 800)
+        : Phaser.Math.Between(0, 400)
+
+      const bomb: Sprite = bombs.create(x, 16, "bomb")
+      bomb.setBounce(1)
+      bomb.setCollideWorldBounds(true)
+      bomb.setVelocity(Phaser.Math.Between(-200, 200), 20)
+    }
+
+    fallBomb(player.x)
 
     this.physics.add.collider(stars, platforms)
     this.physics.add.overlap(player, stars, (_, star: Sprite) => {
@@ -109,14 +127,7 @@ export default class GameScene extends Phaser.Scene {
         child.enableBody(true, child.x, 0, true, true)
       })
 
-      const x = player.x < 400
-        ? Phaser.Math.Between(400, 800)
-        : Phaser.Math.Between(0, 400)
-
-      const bomb: Sprite = bombs.create(x, 16, "bomb")
-      bomb.setBounce(1)
-      bomb.setCollideWorldBounds(true)
-      bomb.setVelocity(Phaser.Math.Between(-200, 200), 20)
+      fallBomb(player.x)
     }, null, this)
   }
 

@@ -71,7 +71,7 @@ const renderer: Configuration = merge(common, {
   },
   plugins: [
     new HtmlPlugin({
-      title: "Phaser Sample",
+      title: "Phaser3 Tutorial Game",
       filename: "index.html",
       template: path.resolve(__dirname, "template", "index.html"),
     }),
