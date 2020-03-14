@@ -1,5 +1,5 @@
 import Phaser from "phaser"
-import { GameScene } from "@/renderer/scenes"
+import scene from "@/renderer/scenes"
 
 type GameConfig = Phaser.Types.Core.GameConfig
 
@@ -14,7 +14,7 @@ const config: GameConfig = {
       debug: false,
     },
   },
-  scene: [GameScene],
+  scene,
 }
 
 export class Game extends Phaser.Game {
