@@ -1,7 +1,6 @@
 import { Configuration } from "webpack"
 import merge from "webpack-merge"
 import path from "path"
-import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
 import HtmlPlugin from "html-webpack-plugin"
 
 const isDev = process.env.NODE_ENV === "development"
@@ -35,9 +34,6 @@ const common: Configuration = {
       },
     ],
   },
-  plugins: [
-    new ForkTsCheckerWebpackPlugin(),
-  ],
 }
 
 const main: Configuration = merge(common, {
