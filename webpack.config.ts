@@ -1,19 +1,40 @@
-import { Configuration } from "webpack"
+import { Configuration, DefinePlugin, Compiler } from "webpack"
 import merge from "webpack-merge"
 import path from "path"
 import HtmlPlugin from "html-webpack-plugin"
+import { server as electronConnect } from "electron-connect"
 
-const isDev = process.env.NODE_ENV === "development"
-const mode = isDev ? "development" : "production"
+const { NODE_ENV } = process.env
+const isDev = NODE_ENV === "development"
 
-const outputPath = path.resolve(__dirname, "dist")
+const server = isDev ? electronConnect.create({
+  path: path.join(__dirname, "dist", "main.js"),
+  logLevel: 0,
+  stopOnClose: true,
+}) : {}
+
+const ConnectPlugin = (isMain = true) => {
+  let isStarted = false
+
+  return {
+    apply(compiler: Compiler) {
+      compiler.hooks.done.tap("ConnectPlugin", () => {
+        if (isStarted) {
+          server[isMain ? "restart" : "reload"]()
+        } else {
+          if (isMain) server.start()
+          isStarted = true
+        }
+      })
+    },
+  }
+}
 
 const common: Configuration = {
-  mode,
+  mode: isDev ? "development" : "production",
   devtool: isDev ? "source-map" : false,
   output: {
-    path: outputPath,
-    filename: "main.js",
+    path: path.resolve(__dirname, "dist"),
   },
   resolve: {
     extensions: [".js", ".ts"],
@@ -34,6 +55,11 @@ const common: Configuration = {
       },
     ],
   },
+  plugins: [
+    new DefinePlugin({
+      NODE_ENV,
+    }),
+  ],
 }
 
 const main: Configuration = merge(common, {
@@ -46,6 +72,11 @@ const main: Configuration = merge(common, {
     __dirname: false,
     __filename: false,
   },
+  plugins: [
+    ...(isDev ? [
+      ConnectPlugin(),
+    ] : []),
+  ],
 })
 
 const renderer: Configuration = merge(common, {
@@ -56,6 +87,9 @@ const renderer: Configuration = merge(common, {
   },
   resolve: {
     extensions: [".json", ".css"],
+    alias: {
+      "@assets": path.join(__dirname, "src", "renderer", "assets"),
+    },
   },
   module: {
     rules: [
@@ -71,7 +105,10 @@ const renderer: Configuration = merge(common, {
       filename: "index.html",
       template: path.resolve(__dirname, "template", "index.html"),
     }),
+    ...(isDev ? [
+      ConnectPlugin(false),
+    ] : []),
   ],
 })
 
-export default [main, renderer]
+export default [renderer, main]

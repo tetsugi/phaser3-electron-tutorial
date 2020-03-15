@@ -11,10 +11,16 @@ const createWindow = () => {
 
   window.loadFile(path.resolve(__dirname, "index.html"))
 
+  if (process.env.NODE_ENV === "development") {
+    require("electron-connect").client.create(window)
+  }
+
   window.on("closed", () => {
     window = null
   })
 }
+
+app.allowRendererProcessReuse = false
 
 app.on("ready", createWindow)
 

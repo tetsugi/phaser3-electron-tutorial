@@ -9,9 +9,11 @@
     "allowJs": true,
     "noEmit": true,
     "isolatedModules": false,
+    "sourceMap": true,
     "paths": {
       "@/*": ["src/*"],
-      "@@/*": ["./*"]
+      "@@/*": ["./*"],
+      "@assets/*": ["src/renderer/assets/*"]
     }
   },
   "include": ["src/**/*", "assets/**/*", "webpack.config.ts"],
