@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack && electron .",
     "build": "cross-env NODE_ENV=production webpack",
+    "watch": "cross-env NODE_ENV=development webpack --watch",
     "start": "electron .",
     "pack:win": "npm run build && electron-builder --win --x64"
   },

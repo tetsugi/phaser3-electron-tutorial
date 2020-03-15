@@ -9,6 +9,7 @@
     "allowJs": true,
     "noEmit": true,
     "isolatedModules": false,
+    "sourceMap": true,
     "paths": {
       "@/*": ["src/*"],
       "@@/*": ["./*"],

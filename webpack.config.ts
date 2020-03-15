@@ -1,19 +1,16 @@
-import { Configuration } from "webpack"
+import { Configuration, DefinePlugin } from "webpack"
 import merge from "webpack-merge"
 import path from "path"
 import HtmlPlugin from "html-webpack-plugin"
 
-const isDev = process.env.NODE_ENV === "development"
-const mode = isDev ? "development" : "production"
-
-const outputPath = path.resolve(__dirname, "dist")
+const { NODE_ENV } = process.env
+const isDev = NODE_ENV === "development"
 
 const common: Configuration = {
-  mode,
+  mode: isDev ? "development" : "production",
   devtool: isDev ? "source-map" : false,
   output: {
-    path: outputPath,
-    filename: "main.js",
+    path: path.resolve(__dirname, "dist"),
   },
   resolve: {
     extensions: [".js", ".ts"],
@@ -34,6 +31,11 @@ const common: Configuration = {
       },
     ],
   },
+  plugins: [
+    new DefinePlugin({
+      NODE_ENV,
+    }),
+  ],
 }
 
 const main: Configuration = merge(common, {
