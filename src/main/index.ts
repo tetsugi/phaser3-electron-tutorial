@@ -1,9 +1,12 @@
-import { app, BrowserWindow } from "electron"
+import { app, BrowserWindow, Menu } from "electron"
 import path from "path"
+import menu from "./menu"
 
 let window: BrowserWindow
 
 const createWindow = () => {
+  Menu.setApplicationMenu(menu)
+
   window = new BrowserWindow({
     width: 800,
     height: 600,
