@@ -1,6 +1,7 @@
 import { Menu } from "electron"
 
 const isMac = process.platform === "darwin"
+const isDev = process.env.NODE_ENV === "development"
 
 export default Menu.buildFromTemplate([
   {
@@ -21,4 +22,14 @@ export default Menu.buildFromTemplate([
         },
     ],
   },
+  ...(
+    isDev ? [
+      {
+        label: "デバッグ",
+        submenu: [
+          { role: "forceReload" },
+          { role: "toggleDevTools" },
+        ],
+      },
+    ] : [] as any),
 ])
